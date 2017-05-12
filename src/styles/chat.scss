@@ -199,11 +199,7 @@
   float: left;
   width:100%;
 }
-.member_list li:hover {
-  background: #428bca none repeat scroll 0 0 ;
-  color: #fff;
-  cursor:pointer;
-}
+
 .chat_container{
 border: 1px solid black;
 }
@@ -219,4 +215,11 @@ border: 1px solid black;
   height: auto;
   width: 50%;
 }
+
+.users :hover{
+   background: #428bca none repeat scroll 0 0 ;
+   color: #fff;
+   cursor:pointer;
+ }
+
 

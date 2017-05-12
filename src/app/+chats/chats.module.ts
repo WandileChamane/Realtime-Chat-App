@@ -8,7 +8,7 @@ import { ChatsListComponent } from './chats-list.component';
 import { ChathistoryComponent } from '../+chat-history/chathistory.component';
 
 // async components must be named routes for WebpackAsyncRoute
-export const routes : Routes = [
+export const routes: Routes = [
   { path: '', component: ChatsComponent, pathMatch: 'full', resolve: { db: DBReady } },
   { path: 'chathistory/:id', component: ChathistoryComponent, resolve: { db: DBReady } },
 ];
@@ -26,5 +26,5 @@ export const routes : Routes = [
   ]
 })
 export class ChatsModule {
-  static routes = routes;
+  public static routes = routes;
 }
