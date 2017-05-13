@@ -22,8 +22,6 @@ export class SignupComponent {
   }
 
   register() {
-
-
     var file = new db.File({path: '/Images/blank.png'});
       var user = new db.User({
         'username': this.user.name,
