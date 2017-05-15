@@ -20,6 +20,8 @@ export class ChatsComponent {
     name: ''
   };
 
+
+  error;
   selectedUser :model.User; // note to delete
   selectedUserID: String;
   public users: Array<model.User>;
@@ -51,10 +53,11 @@ export class ChatsComponent {
     this.selectedUserID = user.key;
   }
   ngOnInit() {
+    if (db.User.me != null){
     db.User
       .find()
       .resultList()
       .then((users) => this.users = users);
+    }
   }
-
 }
