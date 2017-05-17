@@ -42,7 +42,7 @@ export class ChathistoryComponent implements OnDestroy {
     var msg = new db.Message();
     msg.author = db.User.me;
     msg.message = this.user.message;
-    msg.date = new Date();
+    //msg.date = new Date();
     msg.receiver = db.getReference(this.id);
     msg.acl.allowReadAccess(db.User.me);
     msg.acl.allowReadAccess(this.id);
@@ -54,7 +54,7 @@ export class ChathistoryComponent implements OnDestroy {
     var msg = new db.Message();
     msg.author = db.User.me;
     msg.message = this.user.message;
-    msg.date = new Date();
+   // msg.date = new Date();
     msg.receiver = db.getReference(this.id);
     msg.acl.allowReadAccess(db.User.me);
     msg.acl.allowReadAccess(this.id);
@@ -108,14 +108,14 @@ export class ChathistoryComponent implements OnDestroy {
       this.id = '/db/User/' + this.theuserID; //
     });
     // fetches messages of the click user
+    console.log('loading messages');
     var queryBuilder = db.Message.find();
     queryBuilder.or(queryBuilder.equal('receiver',this.id),(queryBuilder.equal('author', this.id)))
-      .resultList((messages) => {
+      .resultStream(messages => {
         console.log('received ' + messages.length + ' messages');
-        Promise.all(messages.sort((a,b) => a.date.getTime() - b.date.getTime())
-          .slice(-8).map((message) => {
+        Promise.all(messages.sort((a,b) => a.date.getTime() - b.date.getTime()).slice(-8).map(message => {
           return message.load({depth: 1})
-        })).then((messages) => this.messages = <Array<model.Message>> messages );
+        })).then(  messages => this.messages = <Array<model.Message>> messages )
       } );
   }
 

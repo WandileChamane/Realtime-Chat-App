@@ -21,13 +21,12 @@ export class ChatsComponent {
   };
 
 
+  modalImageSrc;
   error;
   selectedUser :model.User; // note to delete
   selectedUserID: String;
   public users: Array<model.User>;
  // selectedUser: model.User;
-
-  constructor() {}
 
   getImageUrlUser(user) {
     return user.image.url;
@@ -44,8 +43,8 @@ export class ChatsComponent {
   }
 
   setModalImage(user: model.User){
-    var modalImage = document.getElementById("modal-image");
-    modalImage.src = this.getImageUrlUser(user);
+    //var modalImage = document.getElementById("modal-image");
+   this.modalImageSrc = this.getImageUrlUser(user);
   }
 
   onSelect(user: model.User): void {
