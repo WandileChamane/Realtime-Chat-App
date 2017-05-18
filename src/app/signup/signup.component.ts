@@ -28,6 +28,16 @@ export class SignupComponent {
         'image': file,
       });
       db.User.register(user, this.user.password).then(() => {
+        db.Role.find().equal('name', 'readTheUsers').singleResult(function(role) {
+          var id = db.User.me.id;
+          var loadedUser =  db.User.load(id).then(function (todo) {
+              role.addUser(db.User.me);
+              role.save();
+              todo.acl.allowReadAccess(role);
+              return todo.save();
+          });
+        });
+
         this.router.navigate(['/me']);
       }, (error) => {
         this.error = error.message;
