@@ -1,0 +1,52 @@
+<div *ngIf="theuser">
+  <div class="container-fluid">
+    <div  class = "member_list">
+      <div *ngFor="let message of messages" class="row" >
+        <div *ngIf="theSender.name == message.author.username " class="panel-body pull-right ">
+          <div *ngIf="message.doc != null"  style="background-color: #DDDDDD; padding: 20px" >
+            <a style="border:2px ; background-color: #DCF8C6;   padding: 15px; color: black " [href]="message.doc.url" target="_blank">{{message.doc.name}}</a>
+          </div>
+
+          <div style="border:2px ; background-color: #DDDDDD;   padding: 15px; color: #77846D " *ngIf="message.message != null"  >
+            {{ message.message }}
+          </div>
+        </div>
+
+        <div *ngIf="theSender.name != message.author.username " class="panel-body pull-left"  >
+          <div *ngIf="message.doc != null" style="background-color: #DDDDDD; padding: 20px"  >
+            <a style="border:2px ; background-color: #DCF8C6;   padding: 15px; color: black " [href]="message.doc.url" target="_blank">{{message.doc.name}}</a>
+          </div>
+
+          <div style="border:2px ; background-color: #DDDDDD;   padding: 15px; color: #77846D " *ngIf="message.message != null"  >
+            <div class="message-in">
+              {{ message.message }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group">
+        <form #form="ngForm" >
+          <div>
+            <input  type="text" [(ngModel)]="user.message" class="form-control" (keyup.enter) = "onEnter()"  name="message" required>
+          </div>
+          <div class="row">
+            <div class="col-xs-5">
+              <button class="btn btn-info" type="button" (click)="onSubmit()">Send</button>
+            </div>
+            <div class="col-xs-5">
+              <input  type="file"  (change) ="uploadFiles($event)">
+            </div>
+          </div>
+        </form>
+      </div>
+
+
+    </div>
+
+  </div>
+</div>
+
+
