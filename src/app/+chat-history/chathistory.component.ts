@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, ViewEncapsulation , Input } from '@angula
 import { db, model } from 'baqend/realtime';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from "rxjs/Subscription";
+import {message} from "baqend";
 
 @Component({
   selector: 'chats-list',
@@ -97,6 +98,11 @@ export class ChathistoryComponent implements OnDestroy {
       });
   }
 
+  imageDownload(image:any){
+     image.download;
+     console.log('I am here')
+  }
+
   ngOnInit() {
    this.theSender.name = db.User.me.username;
 
@@ -123,7 +129,11 @@ export class ChathistoryComponent implements OnDestroy {
     this.querySubscription = queryBuilder.or(queryBuilder.equal('receiver',this.id),(queryBuilder.equal('author', this.id)))
       .resultStream((messages) => {
         console.log('received ' + messages.length + ' messages');
-        Promise.all(messages.slice(-20).map(message => {
+        Promise.all(messages.sort(function (time1, time2) {
+          if (time1.date<time2.date){return -1}
+          else if(time1.date>time2.date){return 1}
+          else {return 0}
+        }).slice(-50).map(message => {
           return message.load({depth: 1})
         })).then(  messages => {
           this.messages = <Array<model.Message>> messages;
@@ -131,7 +141,7 @@ export class ChathistoryComponent implements OnDestroy {
             if (message.doc) {
               message.doc.loadMetadata({})
             }
-          })
+          });
         } )
       } );
   }
