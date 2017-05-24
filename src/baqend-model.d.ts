@@ -26,6 +26,7 @@ declare module "baqend" {
       text: string;
       face: string;
       date: Date;
+      doc: binding.File;
     }
 
   }

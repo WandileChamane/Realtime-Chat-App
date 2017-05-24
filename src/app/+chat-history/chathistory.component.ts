@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewEncapsulation , Input } from '@angular/core';
 import { db, model } from 'baqend/realtime';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from "rxjs/Subscription";
 
 @Component({
   selector: 'chats-list',
@@ -20,6 +21,7 @@ export class ChathistoryComponent implements OnDestroy {
   @Input()  theuser: model.User;
   @Input()  theuserID: string;
   private sub: any;
+  private querySubscription: Subscription;
   constructor(private route: ActivatedRoute
 
   ) {}
@@ -46,6 +48,8 @@ export class ChathistoryComponent implements OnDestroy {
     msg.receiver = db.getReference(this.id);
     msg.acl.allowReadAccess(db.User.me);
     msg.acl.allowReadAccess(this.id);
+     msg.acl.allowWriteAccess(db.User.me);
+     msg.acl.allowWriteAccess(this.id);
     msg.insert();
     this.user.message = null;
   }
@@ -58,6 +62,8 @@ export class ChathistoryComponent implements OnDestroy {
     msg.receiver = db.getReference(this.id);
     msg.acl.allowReadAccess(db.User.me);
     msg.acl.allowReadAccess(this.id);
+     msg.acl.allowWriteAccess(db.User.me);
+     msg.acl.allowWriteAccess(this.id);
     msg.insert();
     this.user.message = null;
   }
@@ -97,30 +103,44 @@ export class ChathistoryComponent implements OnDestroy {
   }
 
   ngOnChanges(changes: any) {
-    if (this.sub) {
-      console.log('unsubscribe');
-      this.sub.unsubscribe();
+     console.log(changes)
+
+    if (this.querySubscription) {
+       this.querySubscription.unsubscribe();
     }
 
+    if (!this.theuserID)
+      return;
+
+    this.id = '/db/User/' + this.theuserID;
+    console.log(this.id)
     this.messages = [];
     // Initializes ID of the receiver when component is loaded
-    this.sub = this.route.params.subscribe((params) => {
-      this.id = '/db/User/' + this.theuserID; //
-    });
+
     // fetches messages of the click user
     console.log('loading messages');
-    var queryBuilder = db.Message.find();
-    queryBuilder.or(queryBuilder.equal('receiver',this.id),(queryBuilder.equal('author', this.id)))
-      .resultStream(messages => {
+    let queryBuilder = db.Message.find();
+    this.querySubscription = queryBuilder.or(queryBuilder.equal('receiver',this.id),(queryBuilder.equal('author', this.id)))
+      .resultStream((messages) => {
         console.log('received ' + messages.length + ' messages');
-        Promise.all(messages.sort((a,b) => a.date.getTime() - b.date.getTime()).slice(-8).map(message => {
+        Promise.all(messages.slice(-20).map(message => {
           return message.load({depth: 1})
-        })).then(  messages => this.messages = <Array<model.Message>> messages )
+        })).then(  messages => {
+          this.messages = <Array<model.Message>> messages;
+          this.messages.forEach(message => {
+            if (message.doc) {
+              message.doc.loadMetadata({})
+            }
+          })
+        } )
       } );
   }
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
+
+    if (this.querySubscription) {
+      this.querySubscription.unsubscribe();
+    }
   }
 
 }

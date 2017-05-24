@@ -2,9 +2,12 @@
   <div class="container-fluid">
     <div  class = "member_list">
       <div *ngFor="let message of messages" class="row" >
+
         <div *ngIf="theSender.name == message.author.username " class="panel-body pull-right ">
           <div *ngIf="message.doc != null"  style="background-color: #DDDDDD; padding: 20px" >
-            <a style="border:2px ; background-color: #DCF8C6;   padding: 15px; color: black " [href]="message.doc.url" target="_blank">{{message.doc.name}}</a>
+
+              <a *ngIf = "message.doc.isMetadataLoaded"style="border:2px ; background-color: #DCF8C6;   padding: 15px; color: black " [href]="message.doc.url" target="_blank">{{message.doc.mimeType}}</a>
+
           </div>
 
           <div style="border:2px ; background-color: #DDDDDD;   padding: 15px; color: #77846D " *ngIf="message.message != null"  >
