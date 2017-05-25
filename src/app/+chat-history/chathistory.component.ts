@@ -3,6 +3,7 @@ import { db, model } from 'baqend/realtime';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from "rxjs/Subscription";
 import {message} from "baqend";
+import {promise} from "selenium-webdriver";
 
 @Component({
   selector: 'chats-list',
@@ -36,6 +37,7 @@ export class ChathistoryComponent implements OnDestroy {
   };
 
   messages: Array<model.Message>;
+  dommessages: Array<model.Message>;
 
   getImageUrl(message) {
     return message.image.url;
@@ -45,6 +47,8 @@ export class ChathistoryComponent implements OnDestroy {
     var msg = new db.Message();
     msg.author = db.User.me;
     msg.message = this.user.message;
+    msg.authorName = db.User.me.username;
+    msg.receiverName = db.getReference(this.id).username;
     //msg.date = new Date();
     msg.receiver = db.getReference(this.id);
     msg.acl.allowReadAccess(db.User.me);
@@ -59,6 +63,8 @@ export class ChathistoryComponent implements OnDestroy {
     var msg = new db.Message();
     msg.author = db.User.me;
     msg.message = this.user.message;
+    msg.authorName = db.User.me.username;
+    msg.receiverName = db.getReference(this.id).username;
     // msg.date = new Date();
     msg.receiver = db.getReference(this.id);
     msg.acl.allowReadAccess(db.User.me);
@@ -72,10 +78,12 @@ export class ChathistoryComponent implements OnDestroy {
   uploadFiles($event) {
     var pendingUploads = [];
     var newId = this.id;
+    console.log('this is the extension', + $event.target.files[0].type);
     // If you omit the name parameter, the name of the provided file object is used
     var file = new db.File({data: $event.target.files[0], type: 'blob',
       parent:'/files'
     });
+
     file.acl.allowReadAccess(db.User.me);
     file.acl.allowWriteAccess(db.User.me);
     file.acl.allowReadAccess(newId);
@@ -86,6 +94,8 @@ export class ChathistoryComponent implements OnDestroy {
       var msg = new db.Message();
       msg.author = db.User.me;
       msg.message = null;
+      msg.authorName = db.User.me.username;
+      msg.receiverName = db.getReference(newID1).username;
       var messPath = '/files/files/' + file.name;
       msg.acl.allowReadAccess(db.User.me);
       msg.acl.allowReadAccess(newID1);
@@ -93,7 +103,10 @@ export class ChathistoryComponent implements OnDestroy {
       msg.acl.allowWriteAccess(db.User.me);
       msg.receiver = db.getReference(newID1);
       msg.doc = file;
-      msg.date = new Date();
+      msg.fileMimeType = file.mimeType;
+      msg.fileName = file.name;
+      msg.fileURL = file.url;
+      //msg.date = new Date();
       msg.insert();
     });
   }
@@ -132,23 +145,10 @@ export class ChathistoryComponent implements OnDestroy {
     let queryBuilder = db.Message.find();
     this.querySubscription = queryBuilder.or(queryBuilder.equal('receiver',this.id),(queryBuilder.equal('author', this.id)))
       .resultStream((messages) => {
-        console.log('received ' + messages.length + ' messages');
-        Promise.all(messages.sort(function (time1, time2) {
-          console.log(' I am at this line');
-          if (time1.createdAt<time2.createdAt){return -1}
-          else if(time1.createdAt>time2.createdAt){return 1}
-          else {return 0}
-        }).slice(-50).map(message => {
-          return message.load({depth: 1})
-        })).then(  messages => {
-          this.messages = <Array<model.Message>> messages;
-          this.messages.forEach(message => {
-            if (message.doc) {
-              message.doc.loadMetadata({})
-            }
-          });
-        } )
-      } );
+      this.dommessages = messages;
+        this.dommessages.sort((a,b)=>a.noo-b.noo);
+    this.messages =this.dommessages;}
+    );
   }
 
   ngOnDestroy() {

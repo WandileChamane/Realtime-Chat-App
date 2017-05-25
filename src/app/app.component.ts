@@ -56,23 +56,11 @@ import 'bootstrap-sass/assets/javascripts/bootstrap/transition';
       </a>
     </nav>
 
-    <main class="container">
+    <main class="container-fluid">
       <router-outlet></router-outlet>
     </main>
 
-    <div class="container">
-      <pre class="app-state">this.appState.state = {{ appState.state | json }}</pre>
-    </div>
-
-    <footer class="container">
-      <span>WebPack Angular 2 Starter by <a [href]="url">@AngularClass</a></span>
-      <span>Angular 2 + Baqend by <a [href]="baqend">@Baqendcom</a></span>
-      <div>
-        <a [href]="baqend">
-          <img [src]="angularbaqendLogo" style="max-width: 400px; margin: auto; display: block">
-        </a>
-      </div>
-    </footer>
+    
   `
 })
 export class AppComponent {
