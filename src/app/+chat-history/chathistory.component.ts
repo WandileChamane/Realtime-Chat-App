@@ -12,12 +12,12 @@ import {message} from "baqend";
       .row { margin-top: 20px }
        img { width: 100% }
       .panel { cursor: pointer }
-
     `
   ]
 })
 export class ChathistoryComponent implements OnDestroy {
 
+  modalImage;
   private id: string;
   @Input()  theuser: model.User;
   @Input()  theuserID: string;
@@ -27,7 +27,7 @@ export class ChathistoryComponent implements OnDestroy {
 
   ) {}
 
-   theSender = {
+  theSender = {
     name: ''
   };
 
@@ -37,11 +37,11 @@ export class ChathistoryComponent implements OnDestroy {
 
   messages: Array<model.Message>;
 
-   getImageUrl(message) {
+  getImageUrl(message) {
     return message.image.url;
   }
 
-   onSubmit() {
+  onSubmit() {
     var msg = new db.Message();
     msg.author = db.User.me;
     msg.message = this.user.message;
@@ -49,70 +49,74 @@ export class ChathistoryComponent implements OnDestroy {
     msg.receiver = db.getReference(this.id);
     msg.acl.allowReadAccess(db.User.me);
     msg.acl.allowReadAccess(this.id);
-     msg.acl.allowWriteAccess(db.User.me);
-     msg.acl.allowWriteAccess(this.id);
+    msg.acl.allowWriteAccess(db.User.me);
+    msg.acl.allowWriteAccess(this.id);
     msg.insert();
     this.user.message = null;
   }
 
-   onEnter() {
+  onEnter() {
     var msg = new db.Message();
     msg.author = db.User.me;
     msg.message = this.user.message;
-   // msg.date = new Date();
+    // msg.date = new Date();
     msg.receiver = db.getReference(this.id);
     msg.acl.allowReadAccess(db.User.me);
     msg.acl.allowReadAccess(this.id);
-     msg.acl.allowWriteAccess(db.User.me);
-     msg.acl.allowWriteAccess(this.id);
+    msg.acl.allowWriteAccess(db.User.me);
+    msg.acl.allowWriteAccess(this.id);
     msg.insert();
     this.user.message = null;
   }
 
-   uploadFiles($event) {
+  uploadFiles($event) {
     var pendingUploads = [];
     var newId = this.id;
     // If you omit the name parameter, the name of the provided file object is used
-      var file = new db.File({data: $event.target.files[0], type: 'blob',
-        parent:'/files'
-        });
-      file.acl.allowReadAccess(db.User.me);
-      file.acl.allowWriteAccess(db.User.me);
-       file.acl.allowReadAccess(newId);
-      file.acl.allowWriteAccess(newId);
-      file.upload({force: true}).then(function (file) {
-        var msg = new db.Message();
-        var newID1 = newId;
-        var msg = new db.Message();
-        msg.author = db.User.me;
-        msg.message = null;
-        var messPath = '/files/files/' + file.name;
-        msg.acl.allowReadAccess(db.User.me);
-        msg.acl.allowReadAccess(newID1);
-        msg.acl.allowWriteAccess(db.User.me);
-        msg.acl.allowWriteAccess(db.User.me);
-        msg.receiver = db.getReference(newID1);
-        msg.doc = file;
-        msg.date = new Date();
-        msg.insert();
-      });
+    var file = new db.File({data: $event.target.files[0], type: 'blob',
+      parent:'/files'
+    });
+    file.acl.allowReadAccess(db.User.me);
+    file.acl.allowWriteAccess(db.User.me);
+    file.acl.allowReadAccess(newId);
+    file.acl.allowWriteAccess(newId);
+    file.upload({force: true}).then(function (file) {
+      var msg = new db.Message();
+      var newID1 = newId;
+      var msg = new db.Message();
+      msg.author = db.User.me;
+      msg.message = null;
+      var messPath = '/files/files/' + file.name;
+      msg.acl.allowReadAccess(db.User.me);
+      msg.acl.allowReadAccess(newID1);
+      msg.acl.allowWriteAccess(db.User.me);
+      msg.acl.allowWriteAccess(db.User.me);
+      msg.receiver = db.getReference(newID1);
+      msg.doc = file;
+      msg.date = new Date();
+      msg.insert();
+    });
+  }
+
+  setModalImage(image:any){
+    this.modalImage = image;
   }
 
   imageDownload(image:any){
-     image.download;
-     console.log('I am here')
+    image.download;
+    console.log('I am here')
   }
 
   ngOnInit() {
-   this.theSender.name = db.User.me.username;
+    this.theSender.name = db.User.me.username;
 
   }
 
   ngOnChanges(changes: any) {
-     console.log(changes)
+    console.log(changes)
 
     if (this.querySubscription) {
-       this.querySubscription.unsubscribe();
+      this.querySubscription.unsubscribe();
     }
 
     if (!this.theuserID)
@@ -130,8 +134,9 @@ export class ChathistoryComponent implements OnDestroy {
       .resultStream((messages) => {
         console.log('received ' + messages.length + ' messages');
         Promise.all(messages.sort(function (time1, time2) {
-          if (time1.date<time2.date){return -1}
-          else if(time1.date>time2.date){return 1}
+          console.log(' I am at this line');
+          if (time1.createdAt<time2.createdAt){return -1}
+          else if(time1.createdAt>time2.createdAt){return 1}
           else {return 0}
         }).slice(-50).map(message => {
           return message.load({depth: 1})
