@@ -32,7 +32,8 @@ import 'bootstrap-sass/assets/javascripts/bootstrap/transition';
     './app.component.scss'
   ],
   template: `
-    <nav>
+    <nav class="navbar navbar-default ">
+    
       <a [routerLink]=" ['./'] " routerLinkActive="active">
         Index
       </a>
@@ -54,9 +55,15 @@ import 'bootstrap-sass/assets/javascripts/bootstrap/transition';
       <a [routerLink]=" ['./about'] " routerLinkActive="active">
         About
       </a>
+      
     </nav>
+    
+ 
 
-    <main class="container-fluid">
+ 
+
+
+    <main class="container-fluid ">
       <router-outlet></router-outlet>
     </main>
 

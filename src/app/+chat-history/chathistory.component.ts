@@ -78,9 +78,9 @@ export class ChathistoryComponent implements OnDestroy {
   uploadFiles($event) {
     var pendingUploads = [];
     var newId = this.id;
-    console.log('this is the extension', + $event.target.files[0].type);
+    console.log('this is the name', + $event.target.files[0].name);
     // If you omit the name parameter, the name of the provided file object is used
-    var file = new db.File({data: $event.target.files[0], type: 'blob',
+    var file = new db.File({name:$event.target.files[0].name+db.User.me+db.getReference(this.id).username,data: $event.target.files[0], type: 'blob',
       parent:'/files'
     });
 
