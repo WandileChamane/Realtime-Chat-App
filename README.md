@@ -1,7 +1,7 @@
 !["Logo"](https://cdn.rawgit.com/Baqend/angular2-starter/master/src/assets/Angular+Baqend.svg)
 
 
-#Angular2 and Baqend Starter
+#Chat Application based on Angular2 and Baqend Starter
 With this Angular2 and Baqend starter kit you can build **blazingly fast single page applications** in no time. Setup your project by following the simple steps below.
 
 The starter is based on the [Angular2 Webpack Starter](https://github.com/AngularClass/angular2-webpack-starter) and uses:
@@ -11,6 +11,11 @@ The starter is based on the [Angular2 Webpack Starter](https://github.com/Angula
 * [**TypeScript**](https://www.typescriptlang.org) for typed JavaScript, ES6 features and because it is recommended for Angular2
 * [**Bootstrap**](http://getbootstrap.com) for easy modern styling
 * [**Baqend**](http://www.baqend.com) as a fully managed backend service for backend-less development
+##Try out the hosted file
+* Follow this link (https://icy-potatoes-575.app.baqend.com)
+* Signup
+* Use the real time chat
+* **Hint**:You can signup on two different computers and test the real time feature
 
 ## How to use the template
 

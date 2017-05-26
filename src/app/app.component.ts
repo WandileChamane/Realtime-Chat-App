@@ -32,11 +32,10 @@ import 'bootstrap-sass/assets/javascripts/bootstrap/transition';
     './app.component.scss'
   ],
   template: `
-    <nav class="navbar navbar-default ">
+
+    <nav class="navbar  ">
     
-      <a [routerLink]=" ['./'] " routerLinkActive="active">
-        Index
-      </a>
+      
       <a [routerLink]=" ['./home'] " routerLinkActive="active">
         Home
       </a>

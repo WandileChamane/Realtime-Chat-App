@@ -112,6 +112,15 @@
   padding: 6px;
 }
 
+.chat_list {
+  height: 400px !important;
+  overflow-x: hidden !important;
+  overflow: scroll;
+  overflow-y: auto !important;
+  border: 1px solid #dddddd;
+
+}
+
 .sub_menu_ {
   background: #e8e6e7 none repeat scroll 0 0;
   left: 100%;
