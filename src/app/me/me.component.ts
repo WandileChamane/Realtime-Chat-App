@@ -1,6 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {model, db} from 'baqend/realtime';
-import {Router} from "@angular/router";
+import {Router, Routes} from "@angular/router";
+
+
+
+export const routes: Routes = [
+  { path: 'chats', loadChildren: '../+chats#ChatsModule'},
+]
 
 @Component({
   selector: 'me',
@@ -21,5 +27,11 @@ export class MeComponent implements OnInit {
     db.User.logout().then(() => {
       this.router.navigate(['/']);
     })
+  }
+
+  toChatComponent() {
+
+      this.router.navigate(['/chats']);
+
   }
 }
