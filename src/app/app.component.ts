@@ -40,21 +40,15 @@ import 'bootstrap-sass/assets/javascripts/bootstrap/transition';
       <a [routerLink]=" ['./home'] " routerLinkActive="active">
         Home
       </a>
-      <a [routerLink]=" ['./detail'] " routerLinkActive="active">
-        Detail
-      </a>
-      <a [routerLink]=" ['./barrel'] " routerLinkActive="active">
-        Barrel
-      </a>
+     
+      
       <a [routerLink]=" ['./signup'] " routerLinkActive="active">
         Signup
       </a>
       <a [routerLink]=" ['./chats'] " routerLinkActive="active">
         chats
       </a>
-      <a [routerLink]=" ['./about'] " routerLinkActive="active">
-        About
-      </a>
+      
       
     </nav>
     
