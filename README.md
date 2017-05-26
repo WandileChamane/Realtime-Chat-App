@@ -27,7 +27,7 @@ The starter is based on the [Angular2 Webpack Starter](https://github.com/Angula
 
 Your app is currently connected to a Baqend test instance called 'app-starter', which provides common backend features like data and file storage, user authentication (used in the example), queries and push notifications among others.
 
-To develop your own application 
+##To develop your own application 
 
 1. Launch a free Baqend instance at [baqend.com](http://dashboard.baqend.com/register)
 2. Change the app name in your projects `src/app/db.service.ts` from `app-starter` to your app name
