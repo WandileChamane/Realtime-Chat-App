@@ -50,8 +50,16 @@
   </div>
 
 
-  <div *ngIf = "users == null" class="row ">
-    <h1 style="color: red"> Please Login to access the chat. If you don't have Login details yet, then register an Account</h1>
-  </div>
+  <div *ngIf = "theUSeredNotLoggedIn  " class="row">
+    <div class="col-sm-offset-3 col-sm-6 col-1">
+      <div class="panel panel-default">
+        <div class="panel-heading"> You are not loged-In</div>
+        <div class="panel-body">
+    <h3  style="color: red"> Please Login to access the chat. If you don't have Login details yet, then register an Account</h3>
+          <h3  style="color: red"> Tip: This is fully functional chat app as you can chat with any one within your network. You Invited to make modifications on the github page</h3>
+        </div>
+      </div>
+      </div>
+    </div>
 
 </div>

@@ -21,6 +21,7 @@ export class ChatsComponent {
   };
 
 
+  theUSeredNotLoggedIn;
   modalImageSrc;
   error;
   selectedUser :model.User; // note to delete
@@ -57,6 +58,8 @@ export class ChatsComponent {
       .find()
       .resultList()
       .then((users) => this.users = users);
-    }
+    if(this.theUSeredNotLoggedIn == true)
+      this.theUSeredNotLoggedIn ==false;
+    } else {this.theUSeredNotLoggedIn = true;}
   }
 }
