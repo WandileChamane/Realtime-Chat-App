@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { db , model } from 'baqend/realtime';
 
+
 @Component({
   selector: 'chats-list1',
   templateUrl: `./chats.component.html`,
@@ -12,8 +13,7 @@ import { db , model } from 'baqend/realtime';
       .selected {
      background: #428bca !important;
       }
-    `
-  ]
+    `],
 })
 export class ChatsComponent {
   search = {
