@@ -33,7 +33,7 @@ export class ChatsComponent {
     return user.image.url;
   }
 
-  onSearch() {
+ /* onSearch() {
 
     var queryBuilder =  db.User.find();
 
@@ -42,16 +42,17 @@ export class ChatsComponent {
       .resultList()
       .then((users) => this.users = users);
   }
-
+*/
   setModalImage(user: model.User){
     //var modalImage = document.getElementById("modal-image");
    this.modalImageSrc = this.getImageUrlUser(user);
   }
 
- /* onSelect(user: model.User): void {
+  onSelect(user: model.User): void {
     this.selectedUser = user;
     this.selectedUserID = user.key;
-  }*/
+  }
+
   ngOnInit() {
     if (db.User.me != null){
     db.User
