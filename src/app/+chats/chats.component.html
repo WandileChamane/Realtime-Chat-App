@@ -7,7 +7,7 @@
       <div class="form-group">
         <form #form="ngForm" >
           <div class="form-group">
-            <input style="padding: 15px; margin: 10px; border-radius: 10px" (keyup.enter) = "onSearch()" type="text" [(ngModel)]="search.name" class="form-control"  name="search" required>
+            <input style="padding: 15px; margin: 10px; border-radius: 10px"  type="text" [(ngModel)]="search.name" class="form-control"  name="search" required>
           </div>
         </form>
       </div>
@@ -25,7 +25,7 @@
 
       <div>
         <div  class="member_list " >
-          <div style="cursor: pointer" *ngFor="let user of users | filter: search.name" class="left clearfix"  alt="User Avatar" class="users" [ngClass]="color" [class.selected]="user === selectedUser">
+          <div style="cursor: pointer" *ngFor="let user of users | filter: search.name" class="left clearfix" (click)="onSelect(user)" alt="User Avatar" class="users" [ngClass]="color" [class.selected]="user === selectedUser">
             <div class = "member_list_li selected-user ">
 
         <span  class="chat-img pull-left">

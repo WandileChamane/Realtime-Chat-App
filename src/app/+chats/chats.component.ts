@@ -48,10 +48,10 @@ export class ChatsComponent {
    this.modalImageSrc = this.getImageUrlUser(user);
   }
 
-  onSelect(user: model.User): void {
+ /* onSelect(user: model.User): void {
     this.selectedUser = user;
     this.selectedUserID = user.key;
-  }
+  }*/
   ngOnInit() {
     if (db.User.me != null){
     db.User
