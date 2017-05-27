@@ -20,13 +20,13 @@
           </div>
         </div>
 
-        <div *ngIf="theSender.name != message.authorName " class="panel-body pull-left"  >
+        <div *ngIf="theSender.name == message.receiverName " class="panel-body pull-left"  >
           <div *ngIf="message.doc != null "   >
 
-              <div  *ngIf = "message.fileMiMeType != 'image/jpeg' && message.fileMiMeType != 'image/png'" style="border-radius: 10px;background-color: #DDDDDD; padding: 20px">
+              <div  *ngIf = "message.fileMimeType != 'image/jpeg' && message.fileMimeType != 'image/png'" style="border-radius: 10px;background-color: #DDDDDD; padding: 20px">
                 <a style="border:2px ; background-color: #DCF8C6;   padding: 15px; color: black " download="message.doc.name" [href]="message.doc.url" target="_blank">{{message.doc.name}}</a>
               </div>
-              <div  *ngIf = "message.fileMiMeType == 'image/jpeg' || message.fileMiMeType == 'image/png'">
+              <div  *ngIf = "message.fileMimeType == 'image/jpeg' || message.fileMimeType == 'image/png'">
                 <img data-toggle="modal" data-target="#myModal1" (click)="setModalImage(message.fileURL)" style="cursor:pointer; border:2px ; background-color: #DCF8C6;   padding: 15px; color: black ; width: 20%; height: 20% " [src]="message.fileURL" class="pull-left">
               </div>
 
