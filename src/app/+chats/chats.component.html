@@ -1,16 +1,26 @@
 <div class="container-fluid">
   <div *ngIf = "users!= null"  >
 
+
+
     <div class="col-xs-4 bg-info"  >
 
-
-      <div class="form-group">
+      <div class="row"  >
+        <div class="col-xs-8">
+      <div class="  form-group">
         <form #form="ngForm" >
           <div class="form-group">
             <input style="padding: 15px; margin: 10px; border-radius: 10px"  type="text" [(ngModel)]="search.name" class="form-control"  name="search" required>
           </div>
         </form>
       </div>
+      </div>
+
+        <div class="col-xs-3">
+          <img  style="cursor: pointer; width: 50px; height: 50px" data-toggle="modal" data-target="#myModal" [src]="getImageUrlUser(theLogedUser)" alt="User Avatar" class="img-circle" (click)="setModalImage(theLogedUser)">
+        </div>
+
+    </div>
 
 
       <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -26,7 +36,7 @@
       <div>
         <div  class="member_list " >
           <div style="cursor: pointer" *ngFor="let user of users | filter: search.name" class="left clearfix" (click)="onSelect(user)" alt="User Avatar" class="users" [ngClass]="color" [class.selected]="user === selectedUser">
-            <div class = "member_list_li selected-user ">
+            <div *ngIf ="user!= theLogedUser " class = "member_list_li selected-user ">
 
         <span  class="chat-img pull-left">
                 <img  data-toggle="modal" data-target="#myModal" [src]="getImageUrlUser(user)" alt="User Avatar" class="img-circle" (click)="setModalImage(user)">
@@ -63,3 +73,5 @@
     </div>
 
 </div>
+
+

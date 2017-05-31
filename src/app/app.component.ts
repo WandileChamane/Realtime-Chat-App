@@ -33,16 +33,15 @@ import 'bootstrap-sass/assets/javascripts/bootstrap/transition';
   ],
   template: `
 
-    <nav class="navbar  ">
+    <nav style="background-color: #00BCD4" class="navbar  ">
     
       
       <a [routerLink]=" ['./home'] " routerLinkActive="active">
         Home
       </a>
      
-      
       <a [routerLink]=" ['./signup'] " routerLinkActive="active">
-        Signup
+        Login
       </a>
       <a [routerLink]=" ['./chats'] " routerLinkActive="active">
         chats
@@ -51,10 +50,6 @@ import 'bootstrap-sass/assets/javascripts/bootstrap/transition';
       
     </nav>
     
- 
-
- 
-
 
     <main class="container-fluid ">
       <router-outlet></router-outlet>

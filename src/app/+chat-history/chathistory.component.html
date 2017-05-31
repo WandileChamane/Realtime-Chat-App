@@ -1,6 +1,7 @@
 <div *ngIf="theuser">
   <div class="container-fluid">
-    <div  class = "chat_list">
+    <div style="height: 100vh" >
+    <div #chatdiv  class = "chat_list">
       <div *ngFor="let message of messages" class="row" >
 
         <div *ngIf="theSender.name == message.authorName " class="panel-body pull-right ">
@@ -52,9 +53,10 @@
       </div>
     </div>
 
-  </div>
 
-  <div class="row">
+
+  <div class="row" style="height: 30vh">
+
     <div class="form-group">
       <form #form="ngForm" >
         <div>
@@ -70,8 +72,9 @@
         </div>
       </form>
     </div>
-
+  </div>
 
   </div>
 
+</div>
 </div>

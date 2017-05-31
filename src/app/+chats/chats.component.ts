@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { db , model } from 'baqend/realtime';
+import { Router} from '@angular/router';
 
 
 @Component({
@@ -16,11 +17,16 @@ import { db , model } from 'baqend/realtime';
     `],
 })
 export class ChatsComponent {
+
+  constructor(private router:Router
+  ) {}
+
   search = {
     name: ''
   };
 
 
+  theLogedUser : any
   theUSeredNotLoggedIn;
   modalImageSrc;
   error;
@@ -58,9 +64,12 @@ export class ChatsComponent {
     db.User
       .find()
       .resultList()
-      .then((users) => this.users = users);
+      .then((users) => {this.users = users;  this.theLogedUser = db.User.me});
     if(this.theUSeredNotLoggedIn == true)
       this.theUSeredNotLoggedIn ==false;
-    } else {this.theUSeredNotLoggedIn = true;}
+    } else {
+      this.theUSeredNotLoggedIn = true;
+      this.router.navigate(['/signup'],  { queryParams: { notLoggedIn: this.theUSeredNotLoggedIn } });
+      }
   }
 }

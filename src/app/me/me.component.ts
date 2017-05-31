@@ -25,7 +25,7 @@ export class MeComponent implements OnInit {
 
   logout() {
     db.User.logout().then(() => {
-      this.router.navigate(['/']);
+      this.router.navigate(['/signup']);
     })
   }
 

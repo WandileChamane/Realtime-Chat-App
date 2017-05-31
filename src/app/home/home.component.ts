@@ -1,11 +1,16 @@
-import {
-  Component,
-  OnInit
-} from '@angular/core';
-
+import {Component, OnInit} from '@angular/core';
+import { db , model } from 'baqend/realtime';
 import { AppState } from '../app.service';
 import { Title } from './title';
+import { Routes,Router,  RouterModule } from '@angular/router';
+import { SignupComponent } from '../signup';
+import { DBReady, DBLoggedIn } from '../db.service';
 import { XLargeDirective } from './x-large';
+
+/*const homeRoutes: Routes = [
+   { path: 'chats', loadChildren: '../+chats#ChatsModule'},
+   { path: 'signup', component: SignupComponent, resolve: { db: DBReady } },
+];*/
 
 @Component({
   // The selector is what angular internally uses
@@ -25,15 +30,24 @@ export class HomeComponent implements OnInit {
   // Set our default values
   public localState = { value: '' };
   // TypeScript public modifiers
-  constructor(
+  constructor(private router:Router,
     public appState: AppState,
     public title: Title
+
   ) {}
 
   public ngOnInit() {
     console.log('hello `Home` component');
     // this.title.getData().subscribe(data => this.data = data);
   }
+
+    public onProceedToChat(){
+      if (db.User.me != null){
+      this.router.navigate(['/chats']);
+    }
+    else {this.router.navigate(['/signup']);}
+
+    }
 
   public submitState(value: string) {
     console.log('submitState', value);

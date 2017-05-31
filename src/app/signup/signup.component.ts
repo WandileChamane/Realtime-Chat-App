@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { db } from 'baqend/realtime';
 
 @Component({
@@ -10,6 +10,7 @@ import { db } from 'baqend/realtime';
 
 export class SignupComponent {
 
+
   user = {
     name: '',
     password: ''
@@ -17,6 +18,7 @@ export class SignupComponent {
   error;
 
   constructor(private router:Router) {
+
     if (db.User.me)
       this.router.navigate(['/me']);
   }
@@ -37,8 +39,7 @@ export class SignupComponent {
               return todo.save();
           });
         });
-
-        this.router.navigate(['/me']);
+        this.router.navigate(['/chats']);
       }, (error) => {
         this.error = error.message;
       });
@@ -46,7 +47,7 @@ export class SignupComponent {
 
   logIn() {
     db.User.login(this.user.name, this.user.password).then(() => {
-      this.router.navigate(['/me']);
+      this.router.navigate(['/chats']);
     }, (error) => {
       this.error = error.message;
     });
