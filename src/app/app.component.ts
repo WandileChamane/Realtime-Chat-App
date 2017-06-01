@@ -1,11 +1,10 @@
 /*
  * Angular 2 decorators and services
  */
-import {
-  Component,
-  ViewEncapsulation
-} from '@angular/core';
+import {Component, ViewEncapsulation} from '@angular/core';
 import { AppState } from './app.service';
+//import {DatashareService } from './datashare.service';
+
 
 // load alle bootstrap js modules, remove if not needed
 import 'bootstrap-sass/assets/javascripts/bootstrap/affix';
@@ -27,6 +26,7 @@ import 'bootstrap-sass/assets/javascripts/bootstrap/transition';
  */
 @Component({
   selector: 'app',
+  //providers:[DatashareService],
   encapsulation: ViewEncapsulation.None,
   styleUrls: [
     './app.component.scss'
@@ -39,10 +39,12 @@ import 'bootstrap-sass/assets/javascripts/bootstrap/transition';
       <a [routerLink]=" ['./home'] " routerLinkActive="active">
         Home
       </a>
+ 
      
-      <a [routerLink]=" ['./signup'] " routerLinkActive="active">
+      <a  [routerLink]=" ['./signup'] " routerLinkActive="active">
         Login
       </a>
+      
       <a [routerLink]=" ['./chats'] " routerLinkActive="active">
         chats
       </a>
@@ -52,7 +54,7 @@ import 'bootstrap-sass/assets/javascripts/bootstrap/transition';
     
 
     <main class="container-fluid ">
-      <router-outlet></router-outlet>
+        <router-outlet ></router-outlet>
     </main>
 
     
@@ -63,13 +65,24 @@ export class AppComponent {
   public name = 'Angular 2 Webpack Starter';
   public url = 'https://twitter.com/AngularClass';
   public baqend = 'https://www.baqend.com';
+  loggedIn: any
 
   constructor(
     public appState: AppState
-  ) {}
+  ) {
+  }
+
+  /*changeLogedState(){
+    this.loggedIn = !this.loggedIn
+  }*/
 
   public ngOnInit() {
+
+    //this.loggedIn = true
     console.log('Initial App State', this.appState.state);
+    /*if(db.User != null){
+      this.loggedIn = true
+    }else {this.loggedIn = false}*/
   }
 
 }

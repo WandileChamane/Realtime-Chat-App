@@ -57,7 +57,7 @@
 
   <div class="row" style="height: 30vh">
 
-    <div class="form-group">
+    <div  class="form-group col-xs-9">
       <form #form="ngForm" >
         <div>
           <input  type="text" [(ngModel)]="user.message" class="form-control" (keyup.enter) = "onEnter()"  name="message" required>
@@ -72,6 +72,7 @@
         </div>
       </form>
     </div>
+    <div *ngIf = "notSupportedFile == true" class="col-xs-3" style="color: red"> File Not supported</div>
   </div>
 
   </div>

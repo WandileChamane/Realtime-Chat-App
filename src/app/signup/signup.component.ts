@@ -1,15 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { db } from 'baqend/realtime';
+//import {DatashareService } from '../datashare.service';
 
 @Component({
   selector: 'signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],
+  //providers:[DatashareService]
 })
 
 export class SignupComponent {
 
+  //@Input()  isloggedIn: any
 
   user = {
     name: '',
@@ -46,8 +49,10 @@ export class SignupComponent {
   }
 
   logIn() {
+    //console.log(this.isloggedIn);
     db.User.login(this.user.name, this.user.password).then(() => {
       this.router.navigate(['/chats']);
+      //this._dataShare.setisloggedIn(false);
     }, (error) => {
       this.error = error.message;
     });

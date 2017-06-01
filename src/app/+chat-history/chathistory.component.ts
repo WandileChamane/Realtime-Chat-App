@@ -38,6 +38,7 @@ export class ChathistoryComponent implements OnDestroy {
     message: ''
   };
 
+  notSupportedFile: any
   messages: Array<model.Message>;
   //dommessages: Array<model.Message>;
   //changes: any;
@@ -60,6 +61,8 @@ export class ChathistoryComponent implements OnDestroy {
     msg.acl.allowWriteAccess(this.id);
     msg.insert({refresh:true}).then();
     this.user.message = null;
+    if(this.notSupportedFile == true)
+      this.notSupportedFile = false
     //this.theChatDiv.nativeElement.scrollTop = this.theChatDiv.nativeElement.scrollHeight;
   }
 
@@ -70,12 +73,14 @@ export class ChathistoryComponent implements OnDestroy {
   uploadFiles($event) {
     var pendingUploads = [];
     var newId = this.id;
-    console.log('this is the name', + $event.target.files[0].name);
+    console.log('this is the name', +$event.target.files[0].name);
     // If you omit the name parameter, the name of the provided file object is used
-    var file = new db.File({data: $event.target.files[0], type: 'blob',
-      parent:'/files'
+    var file = new db.File({
+      data: $event.target.files[0], type: 'blob',
+      parent: '/files'
     });
 
+    if(file.mimeType == 'image/png' || file.mimeType ==  'image/jpeg'||file.mimeType == 'text/plain' || file.mimeType ==  'application/pdf' ){
     file.acl.allowReadAccess(db.User.me);
     file.acl.allowWriteAccess(db.User.me);
     file.acl.allowReadAccess(newId);
@@ -99,8 +104,13 @@ export class ChathistoryComponent implements OnDestroy {
       msg.fileName = file.name;
       msg.fileURL = file.url;
       //msg.date = new Date();
-      msg.insert({refresh:true});
+      msg.insert({refresh: true});
     });
+
+  }else {
+      this.notSupportedFile = true;
+    }
+
   }
 
   setModalImage(image:any){

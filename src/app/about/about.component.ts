@@ -4,6 +4,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+
 @Component({
   selector: 'about',
   styles: [`
@@ -30,6 +31,7 @@ export class AboutComponent implements OnInit {
   ) {}
 
   public ngOnInit() {
+
     this.route
       .data
       .subscribe((data: any) => {
