@@ -141,11 +141,11 @@ export class ChathistoryComponent implements OnDestroy {
       this.querySubscription.unsubscribe();
     }
 
-    if (!this.theuserID)
+    if (this.theuser==null)
       return;
 
-    this.id = '/db/User/' + this.theuserID;
-    console.log(this.id)
+    this.id = this.theuser.id;
+    console.log(this.theuser.id)
     //this.messages = [];
     // Initializes ID of the receiver when component is loaded
 

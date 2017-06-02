@@ -3,7 +3,8 @@
  */
 import {Component, ViewEncapsulation} from '@angular/core';
 import { AppState } from './app.service';
-//import {DatashareService } from './datashare.service';
+import { db , model } from 'baqend/realtime';
+import {UserService } from './user.service';
 
 
 // load alle bootstrap js modules, remove if not needed
@@ -26,7 +27,7 @@ import 'bootstrap-sass/assets/javascripts/bootstrap/transition';
  */
 @Component({
   selector: 'app',
-  //providers:[DatashareService],
+  //providers:[UserService],
   encapsulation: ViewEncapsulation.None,
   styleUrls: [
     './app.component.scss'
@@ -41,8 +42,12 @@ import 'bootstrap-sass/assets/javascripts/bootstrap/transition';
       </a>
  
      
-      <a  [routerLink]=" ['./signup'] " routerLinkActive="active">
+      <a *ngIf ="currentUser == null" [routerLink]=" ['./signup'] " routerLinkActive="active">
         Login
+      </a>
+      
+      <a *ngIf ="currentUser != null" [routerLink]=" ['./signup'] " routerLinkActive="active">
+        Logout
       </a>
       
       <a [routerLink]=" ['./chats'] " routerLinkActive="active">
@@ -65,11 +70,14 @@ export class AppComponent {
   public name = 'Angular 2 Webpack Starter';
   public url = 'https://twitter.com/AngularClass';
   public baqend = 'https://www.baqend.com';
+  currentUser: model.User
   loggedIn: any
 
   constructor(
-    public appState: AppState
+    public appState: AppState, private logedState: UserService
   ) {
+    //logedState.LoggedOut.subscribe(item=>{this.currentUser = item})
+
   }
 
   /*changeLogedState(){
@@ -77,12 +85,24 @@ export class AppComponent {
   }*/
 
   public ngOnInit() {
+    this.logedState.LoggedState.subscribe(item=>{this.currentUser = item; })
 
     //this.loggedIn = true
     console.log('Initial App State', this.appState.state);
+    //console.log(db.User.me);
     /*if(db.User != null){
       this.loggedIn = true
     }else {this.loggedIn = false}*/
+    db.ready( () => {
+      if(db.User.me != null) {
+        this.currentUser = db.User.me;
+      }else {
+        this.currentUser = null
+      }
+    //  console.log("hey this is the db"+ this.currentUser)
+      return Promise.resolve(null);
+    }
+    )
   }
 
 }

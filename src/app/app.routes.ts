@@ -11,7 +11,7 @@ import {ChatcontainerComponent} from "./+chatcontainer/chatcontainer.component";
 //import {ChatsComponent} from './+chats/chats.component';
 
 export const ROUTES: Routes = [
-  { path: '',      component: HomeComponent },
+  { path: '',      component: HomeComponent, resolve: { db: DBReady } },
   { path: 'home',  component: HomeComponent, resolve: { db: DBReady } },
   { path: 'about', component: AboutComponent },
   { path: 'detail', loadChildren: './+detail#DetailModule'},

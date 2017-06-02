@@ -31,6 +31,7 @@ import { XLargeDirective } from './home/x-large';
 import { SignupComponent } from './signup/signup.component';
 import { MeComponent } from './me/me.component';
 import { DB_PROVIDERS } from './db.service';
+import {UserService } from './user.service';
 //import {ChatcontainerComponent} from "./+chatcontainer/chatcontainer.component";
 //import {ChatsComponent} from './+chats/chats.component';
 
@@ -75,7 +76,8 @@ type StoreType = {
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
-    APP_PROVIDERS
+    APP_PROVIDERS,
+    UserService
   ]
 })
 export class AppModule {
