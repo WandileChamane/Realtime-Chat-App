@@ -61,7 +61,7 @@ export class ChathistoryComponent implements OnDestroy {
     msg.acl.allowWriteAccess(this.id);
     msg.insert({refresh:true}).then();
     this.user.message = null;
-    if(this.notSupportedFile == true)
+   if(this.notSupportedFile == true)
       this.notSupportedFile = false
     //this.theChatDiv.nativeElement.scrollTop = this.theChatDiv.nativeElement.scrollHeight;
   }
@@ -124,7 +124,7 @@ export class ChathistoryComponent implements OnDestroy {
 
   navigationTimer(){
     let timer = Observable.timer(2000,1000);
-    timer.subscribe( this.theChatDiv.nativeElement.scrollTop = this.theChatDiv.nativeElement.scrollHeight);
+    timer.subscribe( this.theChatDiv.nativeElement.scrollTop = this.theChatDiv.nativeElement.scrollHeight );
 
   }
 
