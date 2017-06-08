@@ -42,6 +42,7 @@ export class SignupComponent {
               return todo.save();
           });
         });
+        this.logedState.setLoggedState(db.User.me)
         this.router.navigate(['/chats']);
       }, (error) => {
         this.error = error.message;

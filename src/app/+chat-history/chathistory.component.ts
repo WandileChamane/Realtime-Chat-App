@@ -23,7 +23,7 @@ export class ChathistoryComponent implements OnDestroy {
   modalImage;
   private id: string;
   @Input()  theuser: model.User;
-  @Input()  theuserID: string;
+  //@Input()  theuserID: string;
   private sub: any;
   private querySubscription: Subscription;
   constructor(private route: ActivatedRoute
