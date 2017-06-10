@@ -1,1 +1,1 @@
-/*export { ChathistoryModule} from './chathistory.module';*/
+export { ChathistoryModule} from './chathistory.module';

@@ -1,50 +1,40 @@
-
-<div *ngIf="theuser != null">
+<div *ngIf="theuser">
   <div class="container-fluid">
-    <div class="chat-hist-cont"  >
-    <div #chatdiv  class = "chat_list">
+    <div  class = "member_list">
       <div *ngFor="let message of messages" class="row" >
 
-        <div *ngIf="theSender.name == message.authorName "
-             class="panel-body pull-right ">
+        <div *ngIf="theSender.name == message.author.username " class="panel-body pull-right ">
           <div *ngIf="message.doc != null "   >
-
-              <div class="send-file-cont"
-                   *ngIf = " message.fileMimeType != 'image/jpeg' && message.fileMimeType != 'image/png'" >
-                <a class="send-file-cont-inner"  download="message.fileName"
-                   [href]="message.fileURL" target="_blank">{{message.fileName}}</a>
+            <div *ngIf = "message.doc.isMetadataLoaded">
+              <div  *ngIf = " message.doc.mimeType != 'image/jpeg' && message.doc.mimeType != 'image/png'" style="background-color: #DDDDDD; padding: 20px">
+                <a style="border:2px ; background-color: #DCF8C6;   padding: 15px; color: black ;  " download="message.doc.name" [href]="message.doc.url" target="_blank">{{message.doc.name}}</a>
               </div>
-              <div class="send-img-cont"
-                   *ngIf = "message.fileMimeType == 'image/jpeg' || message.fileMimeType == 'image/png'" >
-                <img class="send-img-cont-inner pull-right"
-                     data-toggle="modal" data-target="#myModal1" (click)="setModalImage(message.fileURL)"
-                     (click)="imageDownload(message.doc)" [src]="message.fileURL"  >
+              <div *ngIf = "message.doc.mimeType == 'image/jpeg' || message.doc.mimeType == 'image/png'" >
+                <img data-toggle="modal" data-target="#myModal1" (click)="setModalImage(message.doc.url)" style=" cursor:pointer; border:2px ; background-color: #DCF8C6;   padding: 15px; color: black ; width: 20%; height: 20% " (click)="imageDownload(message.doc)" [src]="message.doc.url" class="pull-right" >
               </div>
+            </div>
           </div>
 
-          <div class="send-mess-cont"  *ngIf="message.message != null"  >
+          <div style="border:2px ; background-color: #DDDDDD;   padding: 15px; color: #77846D " *ngIf="message.message != null"  >
             {{ message.message }}
           </div>
         </div>
 
-        <div *ngIf="theSender.name == message.receiverName " class="panel-body pull-left"  >
+        <div *ngIf="theSender.name != message.author.username " class="panel-body pull-left"  >
           <div *ngIf="message.doc != null "   >
-
-              <div class="rec-file-cont"
-                   *ngIf = "message.fileMimeType != 'image/jpeg' && message.fileMimeType != 'image/png'" >
-                <a class="rec-file-cont-inner"  download="message.doc.name"
-                   [href]="message.doc.url" target="_blank">{{message.doc.name}}</a>
+            <div *ngIf = "message.doc.isMetadataLoaded" >
+              <div  *ngIf = "message.doc.mimeType != 'image/jpeg' && message.doc.mimeType != 'image/png'" style="background-color: #DDDDDD; padding: 20px">
+                <a style="border:2px ; background-color: #DCF8C6;   padding: 15px; color: black " download="message.doc.name" [href]="message.doc.url" target="_blank">{{message.doc.name}}</a>
               </div>
-              <div  *ngIf = "message.fileMimeType == 'image/jpeg' || message.fileMimeType == 'image/png'">
-                <img class="rec-img-cont-inner pull-left" data-toggle="modal"
-                     data-target="#myModal1" (click)="setModalImage(message.fileURL)"  [src]="message.fileURL" >
+              <div  *ngIf = "message.doc.mimeType == 'image/jpeg' || message.doc.mimeType == 'image/png'">
+                <img data-toggle="modal" data-target="#myModal1" (click)="setModalImage(message.doc.url)" style="cursor:pointer; border:2px ; background-color: #DCF8C6;   padding: 15px; color: black ; width: 20%; height: 20% " [src]="message.doc.url" class="pull-left">
               </div>
-
+            </div>
           </div>
 
 
 
-          <div class="rec-mess-cont"  *ngIf="message.message != null"  >
+          <div style="border:2px ; background-color: #DDDDDD;   padding: 15px; color: #77846D " *ngIf="message.message != null"  >
             {{ message.message }}
           </div>
         </div>
@@ -52,8 +42,7 @@
       </div>
     </div>
 
-    <div id="myModal1" class="modal fade" tabindex="-1" role="dialog"
-         aria-labelledby="myModalLabel" aria-hidden="true">
+    <div id="myModal1" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-body">
@@ -63,14 +52,13 @@
       </div>
     </div>
 
+  </div>
 
-  <div class="row" style="height: 30vh">
-
-    <div  class="form-group col-xs-9">
+  <div class="row">
+    <div class="form-group">
       <form #form="ngForm" >
         <div>
-          <input  type="text" [(ngModel)]="user.message" class="form-control"
-                  (keyup.enter) = "onEnter()"  name="message" required>
+          <input  type="text" [(ngModel)]="user.message" class="form-control" (keyup.enter) = "onEnter()"  name="message" required>
         </div>
         <div class="row">
           <div class="col-xs-5">
@@ -82,11 +70,8 @@
         </div>
       </form>
     </div>
-    <div *ngIf = "notSupportedFile == true" class="col-xs-3"
-         style="color: red"> File Not supported</div>
-  </div>
+
 
   </div>
 
-</div>
 </div>

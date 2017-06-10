@@ -27,7 +27,6 @@ declare module "baqend" {
       face: string;
       date: Date;
       doc: binding.File;
-      noo: number;
     }
 
   }
