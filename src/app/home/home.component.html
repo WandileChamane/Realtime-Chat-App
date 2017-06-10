@@ -1,39 +1,30 @@
-<div class="card-container">
-  <h1 x-large class="sample-content">Your Content Here</h1>
+<div class="container-fluid" >
+  <div class="row">
+    <div style="height: 90vh;
+  background-color: #333;" >
 
-  <hr>
+      <div style="height: 20%" class="row"></div>
+      <div style="align-content: center">
+      <div >" class="row">
+        <div style="text-align: center">
+          <h1 style="color: white">Baqend + Angular (Chat Application)</h1><br>
+        </div>
+      </div>
+      <div style="text-align: center">
+        <h2 style="color: white">
+          From Developers for Developers.<Br>
+          Baqend lets you focus on your application.<Br>
+          We make global caching and scalable databases<Br>
+          available and easy to use for everyone.<Br>
+        </h2>
+      </div>
 
-  <div>
-    For hot module reloading run
-    <pre>npm run start:hmr</pre>
+        <div style="text-align: center; padding: 20px" >
+          <button style="align-items: center" type="button" class="btn btn-default btn-lg" (click)=" onProceedToChat()" >Proceed to chat</button>
+        </div>
+
+      </div>
+
+    </div>
   </div>
-
-  <hr>
-
-  <div>
-    <h4>Local State</h4>
-
-    <form (ngSubmit)="submitState(localState.value)" autocomplete="off">
-
-      <input
-        [value]="localState.value"
-        (input)="localState.value = $event.target.value"
-        placeholder="Submit Local State to App State"
-        autofocus>
-
-      <button md-raised-button color="primary">Submit Value</button>
-    </form>
-    <!--
-        <input type="text" [value]="localState.value" (input)="localState.value = $event.target.value" autofocus>
-        Rather than wiring up two-way data-binding ourselves with [value] and (input)
-        we can use Angular's [(ngModel)] syntax
-        <input type="text" name="textInput" [(ngModel)]="localState.value" autofocus>
-      -->
-
-    <pre>this.localState = {{ localState | json }}</pre>
-
-  </div>
-
-
-
 </div>

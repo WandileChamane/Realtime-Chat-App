@@ -100,7 +100,7 @@
   border-bottom:none;
 }
 .member_list {
-  height: 380px !important;
+  height: 80vh !important;
   overflow-x: hidden !important;
   overflow: scroll;
   overflow-y: auto !important;
@@ -110,6 +110,15 @@
 .member_list_li{
   border-bottom: 1px solid #dddddd;
   padding: 6px;
+}
+
+.chat_list {
+  height: 70vh !important;
+  overflow-x: hidden !important;
+  overflow: scroll;
+  overflow-y: auto !important;
+  border: 1px solid #dddddd;
+
 }
 
 .sub_menu_ {

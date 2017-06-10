@@ -6,6 +6,7 @@ import { ChatsComponent } from './chats.component';
 import { DBReady } from '../db.service';
 import { ChatsListComponent } from './chats-list.component';
 import { ChathistoryComponent } from '../+chat-history/chathistory.component';
+import {FilterPipe} from '../filter.pipe'
 
 // async components must be named routes for WebpackAsyncRoute
 export const routes: Routes = [
@@ -17,7 +18,7 @@ export const routes: Routes = [
   declarations: [
     ChatsComponent,
     ChathistoryComponent,
-
+    FilterPipe
   ],
   imports: [
     CommonModule,

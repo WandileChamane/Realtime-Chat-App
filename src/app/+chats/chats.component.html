@@ -1,19 +1,44 @@
 <div class="container-fluid">
-  <div *ngIf = "users!= null" class="row ">
+  <div *ngIf = "users!= null"  >
 
-    <div class="col-xs-4 bg-info">
 
-      <div class="form-group">
+
+    <div class="col-xs-4 bg-info"  >
+
+      <div class="row"  >
+        <div class="col-xs-8">
+      <div class="  form-group">
         <form #form="ngForm" >
           <div class="form-group">
-            <label>Search</label>
-          </div>
-          <div class="form-group">
-            <input (keyup.enter) = "onSearch()" type="text" [(ngModel)]="search.name" class="form-control"  name="search" required>
+            <input style="padding: 15px; margin: 10px; border-radius: 10px"  type="text" [(ngModel)]="search.name" class="form-control"  name="search" required>
           </div>
         </form>
       </div>
+      </div>
 
+        <div class="col-xs-3">
+          <img  style="cursor: pointer; width: 50px; height: 50px" data-toggle="modal" data-target="#myModalLoggedUser" [src]="getImageUrlUser(theLogedUser)" alt="User Avatar" class="img-circle"(click)="setnotSupportedFile()" >
+        </div>
+
+    </div>
+
+      <div id="myModalLoggedUser" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <div class="modal-body">
+              <form #form="ngForm" >
+                <div class="row">
+                  <div class="col-xs-5">
+                    <input  type="file"  (change) ="uploadFiles($event)" ><br>
+                    <button (click)="setModalImage(theLogedUser)" data-toggle="modal" data-target="#myModal"> View Pic</button>
+                  </div>
+                </div>
+              </form>
+              <div class="row" *ngIf = "notSupportedFile == true" style="color: red"> File not Supported</div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -27,8 +52,8 @@
 
       <div>
         <div  class="member_list " >
-          <div style="cursor: pointer" *ngFor="let user of users" class="left clearfix" (click)="onSelect(user)" alt="User Avatar" class="users" [ngClass]="color" [class.selected]="user === selectedUser">
-            <div class = "member_list_li selected-user ">
+          <div style="cursor: pointer" *ngFor="let user of users | filter: search.name" class="left clearfix" (click)="onSelect(user)" alt="User Avatar" class="users" [ngClass]="color" [class.selected]="user === selectedUser">
+            <div *ngIf ="user!= theLogedUser " class = "member_list_li selected-user ">
 
         <span  class="chat-img pull-left">
                 <img  data-toggle="modal" data-target="#myModal" [src]="getImageUrlUser(user)" alt="User Avatar" class="img-circle" (click)="setModalImage(user)">
@@ -46,14 +71,24 @@
     </div>
 
     <div  class="col-xs-8 ">
-      <chats-list [theuser]="selectedUser" [theuserID]="selectedUserID" ></chats-list>
+      <chats-list [theuser]="selectedUser"  ></chats-list>
     </div>
 
   </div>
 
 
-  <div *ngIf = "users == null" class="row ">
-    <h1 style="color: red"> Please Login to access the chat. If you don't have Login details yet, then register an Account</h1>
-  </div>
+  <div *ngIf = "theUSeredNotLoggedIn  " class="row">
+    <div class="col-sm-offset-3 col-sm-6 col-1">
+      <div class="panel panel-default">
+        <div class="panel-heading"> You are not loged-In</div>
+        <div class="panel-body">
+    <h3  style="color: red"> Please Login to access the chat. If you don't have Login details yet, then register an Account</h3>
+          <h3  style="color: red"> Tip: This is fully functional chat app as you can chat with any one within your network. You Invited to make modifications on the github page</h3>
+        </div>
+      </div>
+      </div>
+    </div>
 
 </div>
+
+

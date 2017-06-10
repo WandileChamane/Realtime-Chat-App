@@ -1,14 +1,18 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Input } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { db } from 'baqend/realtime';
+import {UserService } from '../user.service';
 
 @Component({
   selector: 'signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],
+ // providers:[UserService]
 })
 
 export class SignupComponent {
+
+  //@Input()  isloggedIn: any
 
   user = {
     name: '',
@@ -16,7 +20,8 @@ export class SignupComponent {
   };
   error;
 
-  constructor(private router:Router) {
+  constructor(private router:Router , private logedState: UserService) {
+
     if (db.User.me)
       this.router.navigate(['/me']);
   }
@@ -37,16 +42,19 @@ export class SignupComponent {
               return todo.save();
           });
         });
-
-        this.router.navigate(['/me']);
+        this.logedState.setLoggedState(db.User.me)
+        this.router.navigate(['/chats']);
       }, (error) => {
         this.error = error.message;
       });
   }
 
   logIn() {
+    //console.log(this.isloggedIn);
     db.User.login(this.user.name, this.user.password).then(() => {
-      this.router.navigate(['/me']);
+      this.logedState.setLoggedState(db.User.me)
+      this.router.navigate(['/chats']);
+      //this._dataShare.setisloggedIn(false);
     }, (error) => {
       this.error = error.message;
     });
