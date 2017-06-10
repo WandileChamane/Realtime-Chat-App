@@ -12,7 +12,7 @@ export class UserService {
  public LoggedState : any;
  //public LoggedIn : any
   //array:any
- 
+
 
   constructor() {
    // this.LoggedOut = new EventEmitter();
