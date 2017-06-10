@@ -33,36 +33,27 @@ import 'bootstrap-sass/assets/javascripts/bootstrap/transition';
     './app.component.scss'
   ],
   template: `
-
     <nav style="background-color: #00BCD4" class="navbar  ">
     
-      
       <a [routerLink]=" ['./home'] " routerLinkActive="active">
         Home
-      </a>
- 
-     
+      </a> 
       <a *ngIf ="currentUser == null" [routerLink]=" ['./signup'] " routerLinkActive="active">
         Login
-      </a>
-      
+      </a>  
       <a *ngIf ="currentUser != null" [routerLink]=" ['./signup'] " routerLinkActive="active">
         Logout
-      </a>
-      
-      <a [routerLink]=" ['./chats'] " routerLinkActive="active">
+      </a>   
+      <a [routerLink]=" ['./chatcontainer'] " routerLinkActive="active">
         chats
-      </a>
-      
+      </a>     
       
     </nav>
     
 
     <main class="container-fluid ">
         <router-outlet ></router-outlet>
-    </main>
-
-    
+    </main>   
   `
 })
 export class AppComponent {
@@ -73,44 +64,27 @@ export class AppComponent {
   currentUser: model.User
   loggedIn: any
 
-  constructor(
-    public appState: AppState, private logedState: UserService
-  ) {
-    //logedState.LoggedOut.subscribe(item=>{this.currentUser = item})
+  //inject AppState and USerService
+  constructor(public appState: AppState, private logedState: UserService) {}
 
-  }
-
-  /*changeLogedState(){
-    this.loggedIn = !this.loggedIn
-  }*/
 
   public ngOnInit() {
+
+    //subscribe to the UserService for changes in the loggedState
     this.logedState.LoggedState.subscribe(item=>{this.currentUser = item; })
 
-    //this.loggedIn = true
-    console.log('Initial App State', this.appState.state);
-    //console.log(db.User.me);
-    /*if(db.User != null){
-      this.loggedIn = true
-    }else {this.loggedIn = false}*/
+   // Initialize currentUser when the db is ready
     db.ready( () => {
       if(db.User.me != null) {
         this.currentUser = db.User.me;
       }else {
         this.currentUser = null
       }
-    //  console.log("hey this is the db"+ this.currentUser)
       return Promise.resolve(null);
     }
     )
+
   }
 
 }
 
-/*
- * Please review the https://github.com/AngularClass/angular2-examples/ repo for
- * more angular app examples that you may copy/paste
- * (The examples may not be updated as quickly. Please open an issue on github for us to update it)
- * For help or questions please contact us at @AngularClass on twitter
- * or our chat on Slack at https://AngularClass.com/slack-join
- */

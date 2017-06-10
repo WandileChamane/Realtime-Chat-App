@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component} from '@angular/core';
+import { Router } from '@angular/router';
 import { db } from 'baqend/realtime';
 import {UserService } from '../user.service';
 
@@ -7,21 +7,21 @@ import {UserService } from '../user.service';
   selector: 'signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],
- // providers:[UserService]
 })
 
 export class SignupComponent {
-
-  //@Input()  isloggedIn: any
 
   user = {
     name: '',
     password: ''
   };
+
   error;
 
+  //injects router and UserService
   constructor(private router:Router , private logedState: UserService) {
 
+    // on initialization, if user looged in navigate to me component
     if (db.User.me)
       this.router.navigate(['/me']);
   }
@@ -43,18 +43,16 @@ export class SignupComponent {
           });
         });
         this.logedState.setLoggedState(db.User.me)
-        this.router.navigate(['/chats']);
+        this.router.navigate(['/chatcontainer']);
       }, (error) => {
         this.error = error.message;
       });
   }
 
   logIn() {
-    //console.log(this.isloggedIn);
     db.User.login(this.user.name, this.user.password).then(() => {
       this.logedState.setLoggedState(db.User.me)
-      this.router.navigate(['/chats']);
-      //this._dataShare.setisloggedIn(false);
+      this.router.navigate(['/chatcontainer']);
     }, (error) => {
       this.error = error.message;
     });

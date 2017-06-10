@@ -20,24 +20,23 @@ import {
  */
 import { ENV_PROVIDERS } from './environment';
 import { ROUTES } from './app.routes';
-// App is our top level component
 import { AppComponent } from './app.component';
 import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InternalStateType } from './app.service';
 import { HomeComponent } from './home';
-import { AboutComponent } from './about';
+
 import { NoContentComponent } from './no-content';
-import { XLargeDirective } from './home/x-large';
 import { SignupComponent } from './signup/signup.component';
 import { MeComponent } from './me/me.component';
 import { DB_PROVIDERS } from './db.service';
 import {UserService } from './user.service';
-//import {ChatcontainerComponent} from "./+chatcontainer/chatcontainer.component";
-//import {ChatsComponent} from './+chats/chats.component';
-
+import {ChatcontainerComponent} from "./chat-container/chatcontainer.component";
+import {FriendlistComponent} from './friendlist/friendlist.component';
+import {FilterPipe} from './filter.pipe'
+import { ChathistoryComponent } from './+chat-history/chathistory.component';
 
 import '../styles/styles.scss';
-import '../styles/headings.css';
+
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -59,16 +58,16 @@ type StoreType = {
   bootstrap: [ AppComponent ],
   declarations: [
     AppComponent,
-    AboutComponent,
     HomeComponent,
     NoContentComponent,
-    XLargeDirective,
-   SignupComponent,
+    SignupComponent,
     MeComponent,
-  // ChatcontainerComponent,
-   //ChatsComponent,
+    ChatcontainerComponent,
+    FriendlistComponent,
+    FilterPipe,
+    ChathistoryComponent
   ],
-  imports: [ // import Angular's modules
+  imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
@@ -77,7 +76,7 @@ type StoreType = {
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
     APP_PROVIDERS,
-    UserService
+    UserService,
   ]
 })
 export class AppModule {
@@ -99,7 +98,6 @@ export class AppModule {
       let restoreInputValues = store.restoreInputValues;
       setTimeout(restoreInputValues);
     }
-
     this.appRef.tick();
     delete store.state;
     delete store.restoreInputValues;

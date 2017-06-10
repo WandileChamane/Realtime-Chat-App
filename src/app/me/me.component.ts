@@ -1,24 +1,20 @@
 import {Component, OnInit} from '@angular/core';
 import {model, db} from 'baqend/realtime';
-import {Router, Routes} from "@angular/router";
+import {Router} from "@angular/router";
 import {UserService } from '../user.service';
 
-
-
-export const routes: Routes = [
-  { path: 'chats', loadChildren: '../+chats#ChatsModule'},
-]
 
 @Component({
   selector: 'me',
   templateUrl: './me.component.html',
-  //providers:[UserService]
 })
+
 
 export class MeComponent implements OnInit {
 
   me:model.User;
 
+  //injects router and UserService
   constructor(private router:Router , private logedState: UserService) {}
 
   ngOnInit() {
@@ -33,8 +29,6 @@ export class MeComponent implements OnInit {
   }
 
   toChatComponent() {
-
-      this.router.navigate(['/chats']);
-
+      this.router.navigate(['/chatcontainer']);
   }
 }

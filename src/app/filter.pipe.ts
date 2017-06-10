@@ -3,14 +3,15 @@
  */
 
 import { Pipe, PipeTransform } from '@angular/core';
-//import {isUndefined} from "util";
 
+// filter pipe for searching through the users list
 @Pipe({
   name: 'filter'
 })
 export class FilterPipe implements PipeTransform {
 
   transform(users: any, term: any): any {
+
    // check if term is undefined
     if(term === undefined) return users;
     // return updated ninjas array
