@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
 import { Router } from '@angular/router';
 import { db } from 'baqend/realtime';
+import {UserService } from '../user.service';
 
 @Component({
   selector: 'signup',
@@ -14,9 +15,13 @@ export class SignupComponent {
     name: '',
     password: ''
   };
+
   error;
 
-  constructor(private router:Router) {
+  //injects router and UserService
+  constructor(private router:Router , private logedState: UserService) {
+
+    // on initialization, if user looged in navigate to me component
     if (db.User.me)
       this.router.navigate(['/me']);
   }
@@ -37,8 +42,8 @@ export class SignupComponent {
               return todo.save();
           });
         });
-
-        this.router.navigate(['/me']);
+        this.logedState.setLoggedState(db.User.me)
+        this.router.navigate(['/chatcontainer']);
       }, (error) => {
         this.error = error.message;
       });
@@ -46,7 +51,8 @@ export class SignupComponent {
 
   logIn() {
     db.User.login(this.user.name, this.user.password).then(() => {
-      this.router.navigate(['/me']);
+      this.logedState.setLoggedState(db.User.me)
+      this.router.navigate(['/chatcontainer']);
     }, (error) => {
       this.error = error.message;
     });
