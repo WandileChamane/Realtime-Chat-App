@@ -50,9 +50,10 @@ export class FriendlistComponent {
 
     if(file.mimeType == 'image/png' || file.mimeType ==  'image/jpeg' ){
 
+
       //set the file access level
-    file.acl.allowReadAccess(db.User.me);
-    file.acl.allowWriteAccess(db.User.me);
+    //file.acl.allowReadAccess(db.User.me);
+    //file.acl.allowWriteAccess(db.User.me);
 
     /*upload the file, load logged user object from baqend,
       update image file object into the loggedIn User
